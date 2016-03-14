@@ -12,6 +12,10 @@ class Card:
         return "{} of {}s".format(self.rank, self.suit)
 
     def value(self):
+        """
+        Ace value change in player class
+        see: ace_change
+        """
         if self.rank == 'A':
             return 11
         elif self.rank in ['K', 'J', 'Q']:
@@ -56,10 +60,17 @@ class Player:
         self.money = money
         self.hand = []
         self.hand_value = []
-        self.blackjack = False
-        self.bust = False
+        # self.blackjack = False
+        # self.bust = False
 
     def ace_change(self):
+        """
+        If hand value total is over 21
+        and there is an ace present, it will
+        change the value.
+        Can be improved to only change first
+        ace. Currently changes all aces.
+        """
         if sum(self.hand_value) > 21:
             for index, ace in enumerate(self.hand_value):
                 if ace == 11:
@@ -71,13 +82,7 @@ class Player:
 
 class Dealer(Player):
 
-    def dealer_ai(self):
-        if sum(self.hand_value) >= 17:
-            pass
-        while sum(self.hand_value) < 17:
-            pass
-# if sum of hand value is >= 17, stand
-# else hit
+    pass
 
 
 class Game:
@@ -106,10 +111,15 @@ class Game:
         self.blackjack = False
 
     def deal_hand(self):
-            for _ in range(2):
-                draw = self.deck.draw()
-                self.current_player.hand.append(str(draw))
-                self.current_player.hand_value.append(int(draw))
+        """
+        gives every player their first two cards.
+        range # can be changed later to use with
+        more players
+        """
+        for _ in range(2):
+            draw = self.deck.draw()
+            self.current_player.hand.append(str(draw))
+            self.current_player.hand_value.append(int(draw))
 
     def winner_bank(self):
         self.current_player.money += 20
@@ -176,7 +186,7 @@ class Game:
                 if self.player_response == "H":
                     print("HIT\n")
                     self.player_draw()
-                elif self.player_response == "S":
+                else:
                     self.player_stand()
             self.player_response = " "
             break
@@ -265,7 +275,7 @@ if __name__ == '__main__':
         new_game.setup_players()
         new_game.hand_reset()
         player_one.money = new_game.current_player.money
-        print("UPDATED PLAYER BANK :: ${}.00".format(player_one.money))
+        print("\t\tUPDATED PLAYER BANK :: ${}.00".format(player_one.money))
     if player_one.money == 0:
         print("YOU RAN OUT OF MONEY. GOODBYE.")
         exit()
