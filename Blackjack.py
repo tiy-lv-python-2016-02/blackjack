@@ -123,7 +123,7 @@ class Deck:
 
     def shuffle(self):
         """
-        :return: Shuffles the undealt cards in the deck.
+        :return: Shuffles the un-dealt cards in the deck.
         """
         random.shuffle(self.cards)
 
