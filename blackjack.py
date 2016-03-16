@@ -64,7 +64,9 @@ class Player:
         self.hand_value = []
         self.player_response = " "
 
-        # self.show_hand()
+    def hand_reset(self):
+        self.hand = []
+        self.hand_value = []
 
     def ace_change(self):
         """
@@ -177,19 +179,6 @@ class Game:
         if not self.winner:
             self.new_round()
 
-        #while self.winner:
-            #self.deck = Deck()
-            #self.deck.shuffle()
-            #self.hands_reset()
-            # self.winner = False
-
-    def hands_reset(self):
-        self.player.hand = []
-        self.player.hand_value = []
-        self.dealer.hand_value = []
-        self.dealer.hand = []
-        self.winner = False
-
     def new_round(self):
 
         self.current_player = self.player
@@ -286,12 +275,9 @@ if __name__ == '__main__':
         fresh_deck = Deck()
         new_game = Game(the_dealer, player_one, fresh_deck)
         new_game.deck.shuffle()
-        new_game.hands_reset()
+        player_one.hand_reset()
+        the_dealer.hand_reset()
         new_game.new_hands()
-
-        if new_game.winner:
-            new_game.hands_reset()
-            new_game.new_hands()
 
     if player_one.money == 0:
         print("YOU RAN OUT OF MONEY. GOODBYE.")
