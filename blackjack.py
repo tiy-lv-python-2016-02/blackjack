@@ -68,6 +68,12 @@ class Player:
         self.hand = []
         self.hand_value = []
 
+    def get_hand(self, draw):
+
+        for _ in range(2):
+            self.hand.append(str(draw))
+            self.hand_value.append(int(draw))
+
     def ace_change(self):
         """
         If hand value total is over 21
@@ -113,17 +119,6 @@ class Game:
     def shuffle(self):
         self.deck.shuffle()
 
-    def deal_hand(self):
-        """
-        gives every player their first two cards.
-        range # can be changed later to use with
-        more players
-        """
-        for _ in range(2):
-            draw = self.deck.draw()
-            self.current_player.hand.append(str(draw))
-            self.current_player.hand_value.append(int(draw))
-
     def draw_card(self):
         draw = self.deck.draw()
         self.current_player.hand.append(str(draw))
@@ -166,7 +161,7 @@ class Game:
 
         for player in self.players:
 
-            self.deal_hand()
+            self.current_player.get_hand(self.deck.draw())
             self.current_player.ace_change()
             self.current_player.money -= 10
             print("{} : {}".format(player.name, player.hand))
